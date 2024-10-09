@@ -116,3 +116,45 @@ dibuja.criterio.Hurwicz(tabla_decision,F)
 dibuja.criterio.Hurwicz_Intervalos(tabla_decision,F)
 ```
 En 5 de los criterios la mejor opción es la Publicidad Online para minimizar los costos. El criterio de Wald tiene dos soluciones, la anterior y la estrategia de Influencers. Por otro lado, el criterio optimista repite con Eventos Presenciales. 
+
+## Problema 2
+Dos amigos, Claudia y Mario, están planeando abrir una pequeña cafetería. Han ahorrado 1500 euros cada uno y quieren decidir qué enfoque darle al negocio. Existen tres opciones según el tipo de menú que ofrezcan: Un menú básico, un menú saludable o un menú gourmet. Dependiendo de la situación económica y las tendencias alimentarias, la demanda puede aumentar o disminuir, lo que afectará sus ingresos.
+
+Si eligen un menú básico, tendrán un flujo constante de clientes, pero los márgenes de ganancia serán bajos, con una ganancia o pérdida del 5%.
+
+Si eligen un menú saludable, pueden atraer a un nicho de clientes en crecimiento, pero la inversión en ingredientes será mayor, y podrían obtener una ganancia del 12% si la tendencia continúa, o perder un 8% si la tendencia no se mantiene.
+
+Si optan por un menú gourmet, el riesgo es mayor porque depende de la clientela de alto poder adquisitivo, lo que les permitirá obtener una ganancia del 20% si la economía es favorable, pero podrían perder un 15% si la economía se desacelera.
+Claudia es más conservadora y prefiere minimizar los riesgos, mientras que Mario está dispuesto a asumir más riesgos confiando en que la economía mejorará.
+
+¿Qué tipo de menú elegiría cada uno de ellos según sus actitudes hacia el riesgo?
+Estado e1 (Demanda favorable)
+```{r}
+n11 = 1500 * 0.05     # Menú básico
+n21 = 1500 * 0.12     # Menú saludable
+n31 = 1500 * 0.20     # Menú gourmet
+```
+Estado e2 (Demanda desfavorable)
+```{r}
+n12 = -1500 * 0.05    # Menú básico
+n22 = -1500 * 0.08    # Menú saludable
+n32 = -1500 * 0.15    # Menú gourmet
+```
+Crear la tabla de decisión
+```{r}
+tb_decision = crea.tablaX(c(n11, n12,
+                            n21, n22,
+                            n31, n32), 3, 2)
+```
+Aplicar los criterios de decisión
+```{r}
+res_decision = criterio.Todos(tb_decision, alfa = 0.5, favorable = TRUE)
+```
+Mostrar los resultados en formato tabla
+```{r}
+knitr::kable(res_decision)
+```
+Claudia es conservadora y busca minimizar las posibles pérdidas. Aplicando el criterio de Wald o Minimax, probablemente seleccione la opción del menú básico, que ofrece la menor pérdida en el peor escenario (-75 euros). 
+Mario es más arriesgado y busca maximizar sus posibles ganancias. Aplicando el criterio optimista (Maximax), seleccionará el menú gourmet, que le podría dar la mayor ganancia en el mejor escenario (300 euros).
+Claudia optará por un menú básico y Mario por un menú gourmet. 
+
