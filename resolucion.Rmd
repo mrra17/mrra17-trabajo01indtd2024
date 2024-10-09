@@ -1,0 +1,118 @@
+---
+title: "Resolución de problemas"
+author: "MR"
+date: "2024-10-09"
+output: html_document
+---
+
+\newpage
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("teoriadecision_funciones_incertidumbre.R")
+```
+
+## Problema 1
+Aplicar los criterios de decisión bajo incertidumbre a los problemas cuya matriz de valores numéricos viene dada en la tabla siguiente:
+Creamos la matriz de decisión:
+```{r}
+tabla_decision <- matrix(c(7, 5, 8,   # Publicidad TV
+                           4, 6, 3,   # Publicidad Online
+                           2, 9, 7,   # Eventos Presenciales
+                           5, 4, 6),  # Influencers
+                         nrow = 4, byrow = TRUE)
+
+rownames(tabla_decision) <- c("Publicidad TV", "Publicidad Online", "Eventos Presenciales", "Influencers")
+colnames(tabla_decision) <- c("Mercado Local", "Mercado Internacional", "Nuevas Tecnologías")
+tabla_decision
+```
+Donde las estrategias son los tipos de publicidad y los estados de la naturaleza los mercados considerar:
+a)Beneficios (favorable)
+
+Criterio de wald: Selecciona la estrategia que tenga el mayor de los valores mínimos, siendo conservador.
+```{r}
+s01_wald = criterio.Wald(tabla_decision,T)
+s01_wald
+names(s01_wald$AlternativaOptima)
+```
+Criterio Optimista: Este criterio selecciona la estrategia con el mejor resultado posible, siendo muy optimista.
+```{r}
+s01_optima=criterio.Optimista(tabla_decision,T)
+s01_optima
+names(s01_optima$AlternativaOptima)
+```
+Criterio  Hurwicz:ombina el optimismo y el pesimismo mediante un coeficiente alfa (en este caso, 0.4, lo que significa que se considera más pesimismo).
+```{r}
+s01_hurwitz=criterio.Hurwicz(tabla_decision,alfa=0.4,T)
+s01_hurwitz
+names(s01_hurwitz$AlternativaOptima)
+```
+Criterio Savage: Minimiza el arrepentimiento, es decir, la diferencia entre lo que se obtuvo y lo que podría haberse obtenido en el mejor escenario.
+```{r}
+s01_savage=criterio.Savage(tabla_decision,T)
+s01_savage
+names(s01_savage$AlternativaOptima)
+```
+Criterio Laplace:Considera que todos los estados de la naturaleza son igualmente probables.
+```{r}
+s01_laplace=criterio.Laplace(tabla_decision,T)
+names(s01_laplace$AlternativaOptima)
+s01_laplace$ValorAlternativas
+```
+Criterio Punto Ideal: Compara las alternativas con un "punto ideal" en el que se maximiza todo.
+```{r}
+s01_pid=criterio.PuntoIdeal(tabla_decision,T)
+s01_pid$AlternativaOptima
+s01_pid$ValorAlternativas
+```
+Todos los criterios:
+```{r}
+s01_todos=criterio.Todos(tabla_decision,alfa=0.5,T)
+s01_todos
+dibuja.criterio.Hurwicz(tabla_decision,T)
+dibuja.criterio.Hurwicz_Intervalos(tabla_decision,T)
+```
+En todos los casos la mejor estrategia es la Publicidad en TV, excepto en el criterio optimista que la estrategia son los Eventos Presenciales. 
+
+b)Costos (desfavorable)
+Criterio de wald
+```{r}
+s01_wald = criterio.Wald(tabla_decision,F)
+names(s01_wald$AlternativaOptima)
+```
+Criterio Optimista
+```{r}
+s01_optima=criterio.Optimista(tabla_decision,F)
+names(s01_optima$AlternativaOptima)
+```
+Criterio  Hurwicz
+```{r}
+s01_hurwicz=criterio.Hurwicz(tabla_decision,alfa=0.4,F)
+names(s01_hurwitz$AlternativaOptima)
+```
+Criterio Savage
+```{r}
+s01_savage=criterio.Savage(tabla_decision,F)
+names(s01_savage$AlternativaOptima)
+```
+Criterio Laplace
+```{r}
+s01_laplace=criterio.Laplace(tabla_decision,F)
+names(s01_laplace$AlternativaOptima)
+s01_laplace$ValorAlternativas
+```
+Criterio Punto Ideal
+```{r}
+s01_pid=criterio.PuntoIdeal(tabla_decision,F)
+s01_pid$AlternativaOptima
+s01_pid$ValorAlternativas
+```
+Todos los criterios:
+```{r}
+s01_todos=criterio.Todos(tabla_decision,alfa=0.5,F)
+s01_todos
+dibuja.criterio.Hurwicz(tabla_decision,F)
+dibuja.criterio.Hurwicz_Intervalos(tabla_decision,F)
+```
+En 5 de los criterios la mejor opción es la Publicidad Online para minimizar los costos. El criterio de Wald tiene dos soluciones, la anterior y la estrategia de Influencers. Por otro lado, el criterio optimista repite con Eventos Presenciales. 
