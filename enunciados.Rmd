@@ -1,0 +1,38 @@
+---
+title: "Enunciados"
+author: "MR"
+date: "2024-10-09"
+output: html_document
+---
+\newpage
+
+## Problema 1
+Aplicar los criterios de decisión bajo incertidumbre a los problemas cuya matriz de valores numéricos viene dada en la tabla siguiente:
+Creamos la matriz de decisión:
+```{r}
+tabla_decision <- matrix(c(7, 5, 8,   # Publicidad TV
+                           4, 6, 3,   # Publicidad Online
+                           2, 9, 7,   # Eventos Presenciales
+                           5, 4, 6),  # Influencers
+                         nrow = 4, byrow = TRUE)
+
+rownames(tabla_decision) <- c("Publicidad TV", "Publicidad Online", "Eventos Presenciales", "Influencers")
+colnames(tabla_decision) <- c("Mercado Local", "Mercado Internacional", "Nuevas Tecnologías")
+tabla_decision
+```
+Donde las estrategias son los tipos de publicidad y los estados de la naturaleza los mercados considerar:
+a)Beneficios (favorable)
+b)Costos (desfavorable)
+
+## Problema 2
+Dos amigos, Claudia y Mario, están planeando abrir una pequeña cafetería. Han ahorrado 1500 euros cada uno y quieren decidir qué enfoque darle al negocio. Existen tres opciones según el tipo de menú que ofrezcan: Un menú básico, un menú saludable o un menú gourmet. Dependiendo de la situación económica y las tendencias alimentarias, la demanda puede aumentar o disminuir, lo que afectará sus ingresos.
+
+Si eligen un menú básico, tendrán un flujo constante de clientes, pero los márgenes de ganancia serán bajos, con una ganancia o pérdida del 5%.
+
+Si eligen un menú saludable, pueden atraer a un nicho de clientes en crecimiento, pero la inversión en ingredientes será mayor, y podrían obtener una ganancia del 12% si la tendencia continúa, o perder un 8% si la tendencia no se mantiene.
+
+Si optan por un menú gourmet, el riesgo es mayor porque depende de la clientela de alto poder adquisitivo, lo que les permitirá obtener una ganancia del 20% si la economía es favorable, pero podrían perder un 15% si la economía se desacelera.
+Claudia es más conservadora y prefiere minimizar los riesgos, mientras que Mario está dispuesto a asumir más riesgos confiando en que la economía mejorará.
+
+¿Qué tipo de menú elegiría cada uno de ellos según sus actitudes hacia el riesgo?
+
